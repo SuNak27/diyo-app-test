@@ -14,7 +14,7 @@ class SalesSeeder extends Seeder
     public function run(): void
     {
         Sales::create([
-            'total' => 10000,
+            'total' => 60000,
             'payment_method' => 'GOPAY',
         ]);
     }

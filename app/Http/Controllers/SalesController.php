@@ -93,7 +93,9 @@ class SalesController extends Controller
 
             // Create Cart
             foreach ($checkProduct as $key => $value) {
-                $productDetail = ProductDetail::whereIn('id', $request->products[$key]['variants'])->get();
+                $productDetail = ProductDetail::where('product_id', $request->products[$key]['product_id'])
+                    ->whereIn('variant_id', $request->products[$key]['variants'])
+                    ->get();
 
                 foreach ($productDetail as $key => $value) {
                     Cart::create([
@@ -130,9 +132,23 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sales $sales)
+    public function show($id)
     {
-        //
+        try {
+            $sales = Sales::getByID($id);
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'message' => 'Success',
+                'data' => $sales,
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

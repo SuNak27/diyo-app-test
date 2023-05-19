@@ -47,4 +47,18 @@ class Sales extends Model
 
         return $item;
     }
+
+    public static function getByID($id)
+    {
+        $query = self::find($id);
+        $data = [
+            'id' => $query->id,
+            'cart' => Cart::getBySalesID($query->id),
+            'total' => $query->total,
+            'payment_method' => $query->payment_method,
+            'created_at' => $query->created_at,
+        ];
+
+        return $data;
+    }
 }
