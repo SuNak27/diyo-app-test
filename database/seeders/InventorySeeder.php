@@ -14,7 +14,7 @@ class InventorySeeder extends Seeder
     public function run(): void
     {
         Inventory::create([
-            'name' => 'Beras',
+            'name' => 'Flour',
             'price' => 10000,
             'amount' => 10,
             'unit' => 'kg',
